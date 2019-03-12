@@ -4,7 +4,7 @@ import json
 API_ROOT = 'https://api.nytimes.com/svc/search/v2/articlesearch.json?'
 
 
-class NoKeyException:
+class NoKeyException(Exception):
     def __init__(self, error):
         self.error = error
 
@@ -12,7 +12,7 @@ class NoKeyException:
         return repr(self.error)
 
 
-class NoResponseException:
+class NoResponseException(Exception):
     def __init__(self, query, response):
         self.response = response
 
@@ -24,7 +24,7 @@ class NYTSearch(object):
     def __init__(self, key=None):
         self.key = key
         if key is None:
-            raise NoKeyException('')
+            raise NoKeyException('No Key provided')
 
     def search(self, terms):
         terms_formatted = 'q=' + terms.replace(' ', '+')
